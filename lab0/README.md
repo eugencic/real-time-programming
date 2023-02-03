@@ -9,10 +9,16 @@ These are the tasks for the first week.
 ### Clone the repository
 
 ```bash
-$ git clone https://github.com/eugencic/utm-ptr/lab0
+$ git clone https://github.com/eugencic/utm-ptr
 ```
 
 ### Print Hello PTR
+
+Change the directory
+
+```
+$ cd lab0
+```
 
 Use this command in the terminal to open Elixir's Interactive Shell
 
@@ -25,7 +31,6 @@ Execute the function to print the message
 ```
 iex(1)> Lab0.print_hello()
 Hello PTR
-:hello_ptr
 ```
 
 ### Execute the unit test

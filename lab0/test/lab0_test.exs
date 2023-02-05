@@ -1,8 +1,8 @@
 defmodule Lab0Test do
   use ExUnit.Case
-  doctest Lab0
+  doctest HelloPTR
 
   test "message is Hello PTR" do
-    assert Lab0.print_hello() == :message
+    assert HelloPTR.hello_ptr() == :message
   end
 end

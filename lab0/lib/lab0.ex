@@ -1,47 +1,49 @@
-defmodule HelloPTR do
+defmodule Week1 do
   def hello_ptr do
-    IO.puts("Hello PTR")
-    :message
+    message = "Hello PTR"
+    IO.puts(message)
+    message
   end
 end
 
-defmodule IsPrime do
-  def is_prime?(n) when n <= 1, do: false
-  def is_prime?(n) when n in [2, 3], do: true
+Week1.hello_ptr()
+
+defmodule Week2 do
+  def is_prime?(n) when n <= 1, do: :false
+  def is_prime?(n) when n in [2, 3], do: :true
   def is_prime?(n) do
     floored_sqrt = round(Float.floor(:math.sqrt(n)))
-    !Enum.any?(2..floored_sqrt, &(rem(n, &1) == 0))
+    !Enum.any?(2..floored_sqrt, fn number -> rem(n, number) == 0 end)
   end
-end
 
-defmodule CylinderArea do
-  def cylinder_area(radius, height) do
-    2 * :math.pi * radius * (height + radius)
+  def cylinder_area(height, radius) do
+    area = 2 * :math.pi * radius * (height + radius)
+    Float.ceil(area, 4)
   end
-end
 
-defmodule Reverse do
   def reverse(list) do
-    Enum.reverse(list)
+    do_reverse(list, [])
   end
-end
 
-defmodule UniqueSum do
+  defp do_reverse([h|t], reversed) do
+    do_reverse(t, [h|reversed])
+  end
+
+  defp do_reverse([], reversed) do
+    reversed
+  end
+
   def unique_sum(list) do
     unique_list = Enum.uniq(list)
     Enum.sum(unique_list)
   end
-end
 
-defmodule RandomNumber do
-  def random_number(list, n) do
+  def extract_random_number(list, n) do
     shuffled_list = Enum.sort_by(list, fn _ -> :rand.uniform() end)
     Enum.take(shuffled_list, n)
   end
-end
 
-defmodule Fibonacci do
-  def fibonacci(x) do
+  def first_fibonacci_elements(x) do
     for n <- 0..x - 1, do: fib(n)
   end
 
@@ -50,20 +52,38 @@ defmodule Fibonacci do
   defp fib(n) when n > 1 do
     fib(n - 1) + fib(n - 2)
   end
-end
 
-defmodule Translate do
   def translate(dictionary, string) do
-    words = String.split(string, " ")
-    translated_words = Enum.map(words, fn word -> translate_word(dictionary, word) end)
-    translated_words = Enum.join(translated_words, " ")
-    IO.puts(translated_words)
+    words = String.split(string, " ", [trim: true])
+    translated_words = Enum.map(words, fn word -> dictionary[String.to_atom(word)] || word end)
+    Enum.join(translated_words, " ")
   end
 
-  defp translate_word(dictionary, word) do
-    trimmed_word = String.trim(word)
-    dictionary[trimmed_word] || word
+  def smallest_number(a, b, c) do
+    numbers = [a, b, c]
+    numbers = Enum.sort(numbers)
+    first_non_zero = Enum.find(numbers, fn number -> number != 0 end)
+    numbers = List.delete(numbers, first_non_zero)
+    numbers = [first_non_zero | numbers]
+    smallest_num = Enum.join(numbers)
+    String.to_integer(smallest_num)
+  end
+
+  def rotate_left(list, number) do
+    to_rotate = Enum.drop(list, number)
+    remaining = Enum.take(list, number)
+    to_rotate ++ remaining
+  end
+
+  def list_right_angled_triangles do
+    max_a = 20
+    max_b = 20
+    max_c = trunc(:math.sqrt(max_a * max_a + max_b * max_b))
+    list = for a <- (1..max_a), b <- (1..max_b), c <- (1..max_c), do: {a, b, c}
+    Enum.filter(list, fn {a, b, c} -> check_p_theorem(a, b, c) end)
+  end
+
+  defp check_p_theorem(a, b, c) do
+    if c * c == a * a + b * b, do: true, else: false
   end
 end
-
-HelloPTR.hello_ptr()

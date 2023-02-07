@@ -86,4 +86,8 @@ defmodule Week2 do
   defp check_p_theorem(a, b, c) do
     if c * c == a * a + b * b, do: true, else: false
   end
+
+  def remove_consecutive_duplicates(list) do
+    Enum.dedup(list)
+  end
 end

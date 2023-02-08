@@ -29,7 +29,7 @@ Use this command in the terminal to open the Elixir's Interactive Shell
 Execute the function to print the message
 
 ```
-iex(1)> Lab0.print_hello()
+iex(1)> Week1.hello_ptr()
 Hello PTR
 ```
 

@@ -91,3 +91,83 @@ defmodule Week2 do
     Enum.dedup(list)
   end
 end
+
+defmodule Week3 do
+  def print_message do
+    receive do
+      message -> IO.puts(message)
+    end
+    print_message()
+  end
+
+  def modify_message do
+    receive do
+      message ->
+        modified_message = change_message(message)
+        IO.puts("Received: #{modified_message}")
+    end
+    modify_message()
+  end
+
+  def change_message(message) do
+    case message do
+      int when is_integer(int) -> int + 1
+      str when is_binary(str) -> String.downcase(str)
+      _ -> "I don't know how to HANDLE this!"
+    end
+  end
+
+  def average(total, count) do
+    receive do
+      number ->
+        new_total = total + number
+        new_count = count + 1
+        average = new_total / new_count
+        IO.puts("Current average is: #{average}")
+        average(new_total, new_count)
+    end
+  end
+end
+
+defmodule Week3MonitoringActor do
+  def run_monitoring_actor do
+    IO.puts("The monitoring actor has started.")
+    spawn_monitor(Week3MonitoredActor, :run_monitored_actor, [])
+    receive do
+      {:DOWN, _ref, :process, _from_pid, reason} -> IO.puts("The monitoring actor has detected that the monitored actor has stopped. Exit reason: #{reason}.")
+      Process.sleep(5000)
+    end
+    # monitored_actor = spawn(Week3MonitoredActor, :run_monitored_actor, [])
+    # Process.monitor(monitored_actor)
+    # receive do
+    #   {:DOWN, _ref, :process, _from_pid, reason} -> IO.puts("The monitoring actor has detected that the monitored actor has stopped. Exit reason: #{reason}.")
+    # end
+    run_monitoring_actor()
+  end
+end
+
+defmodule Week3MonitoredActor do
+    def run_monitored_actor do
+    IO.puts("The monitored actor has started.")
+    Process.sleep(5000)
+    IO.puts("The monitored actor has finished.")
+    exit(:crash)
+  end
+end
+
+# Task 1
+# pid = spawn(Week3, :print_message, [])
+# send pid, "Task 1"
+
+# Task 2
+# pid = spawn(Week3, :modify_message, [])
+# send pid, 10
+# send pid, "Hello"
+# send pid, {10, "Hello"}
+
+# Task 3
+# pid = spawn(Week3MonitoringActor, :run_monitoring_actor, [])
+
+# Task 4
+# pid = spawn(Week3, :average, [0, 0])
+# send pid, 10

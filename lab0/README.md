@@ -29,7 +29,7 @@ Use this command in the terminal to open the Elixir's Interactive Shell
 Execute the function to print the message
 
 ```
-iex(1)> Week1.hello_ptr()
+iex(1)> Lab0.print_hello()
 Hello PTR
 ```
 
@@ -173,5 +173,80 @@ Write a function that eliminates consecutive duplicates in a list.
   end
 ```
 
+## Week 3
+
+These are the tasks for the third week.
+
+## Tasks
+
+Create an actor that prints on the screen any message it receives.
+
+```elixir
+  def print_message do
+    receive do
+      message -> IO.puts(message)
+    end
+    print_message()
+  end
 ``` 
 
+Create an actor that returns any message it receives, while modifying it.
+
+```elixir
+  def modify_message do
+    receive do
+      message ->
+        modified_message = change_message(message)
+        IO.puts("Received: #{modified_message}")
+    end
+    modify_message()
+  end
+
+  def change_message(message) do
+    case message do
+      int when is_integer(int) -> int + 1
+      str when is_binary(str) -> String.downcase(str)
+      _ -> "I don't know how to HANDLE this!"
+    end
+  end
+``` 
+
+Create a two actors, actor one ”monitoring” the other. If the second actor stops, actor one gets notified via a message.
+
+```elixir
+  defmodule Week3MonitoringActor do
+    def run_monitoring_actor do
+      IO.puts("The monitoring actor has started.")
+      spawn_monitor(Week3MonitoredActor, :run_monitored_actor, [])
+      receive do
+        {:DOWN, _ref, :process, _from_pid, reason} -> IO.puts("The monitoring actor has detected that the monitored actor has stopped. Exit reason: #{reason}.")
+        Process.sleep(5000)
+      end
+      run_monitoring_actor()
+    end
+  end
+
+  defmodule Week3MonitoredActor do
+      def run_monitored_actor do
+      IO.puts("The monitored actor has started.")
+      Process.sleep(5000)
+      IO.puts("The monitored actor has finished.")
+      exit(:crash)
+    end
+  end
+``` 
+
+Create an actor which receives numbers and with each request prints out the current average.
+
+```elixir
+  def average(total, count) do
+    receive do
+      number ->
+        new_total = total + number
+        new_count = count + 1
+        average = new_total / new_count
+        IO.puts("Current average is: #{average}")
+        average(new_total, new_count)
+    end
+  end
+``` 

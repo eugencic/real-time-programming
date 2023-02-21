@@ -250,3 +250,53 @@ Create an actor which receives numbers and with each request prints out the curr
     end
   end
 ``` 
+
+## Week 4
+
+These are the tasks for the fourth week.
+
+## Tasks
+
+Create a supervised pool of identical worker actors. The number of actors is static, given at initialization. Workers should be individually addressable. Worker actors should echo any message they receive. If an actor dies (by receiving a “kill” message), it should be restarted by the supervisor. Logging is welcome.
+
+```elixir
+  defmodule Week4WorkingActor do
+    def run_working_actor do
+      pid = spawn(Week4WorkingActor, :working_actor, [])
+      name = for _ <- 1..8, into: "", do: <<Enum.random('abcdefghijklmnopqrstuvwxyz')>>
+      Process.register(pid, String.to_atom(name))
+      IO.puts("Worker with Id: (#{inspect(pid)}) and Name: (:#{name}) has been created")
+      pid
+    end
+
+    def working_actor do
+      receive do
+        :kill ->
+          exit(:kill)
+        message -> IO.puts("Worker with Id: (#{inspect(self())}) received a message: #{inspect(message)}")
+      end
+      working_actor()
+    end
+  end
+
+  defmodule Week4SupervisedPool do
+    def run_supervised_pool(n) do
+      IO.puts("Supervisor has started")
+      processes = Enum.map(1..n, fn _ -> Week4WorkingActor.run_working_actor() end)
+      spawn(Week4SupervisedPool, :supervised_pool, [processes])
+    end
+
+    def supervised_pool(processes) do
+      IO.puts("Workers monitored by the supervisor: #{inspect(processes)}")
+      Enum.map(processes, fn process-> Process.monitor(process) end)
+
+      receive do
+        {:DOWN, _ref, :process, pid, :kill} -> IO.puts("Worker with Id: (#{inspect(pid)}) has finished. Creating and monitoring a new worker")
+        new_pid = Week4WorkingActor.run_working_actor()
+        processes = List.delete(processes, pid)
+        processes = [new_pid] ++ processes
+        supervised_pool(processes)
+      end
+    end
+  end
+``` 

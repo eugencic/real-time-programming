@@ -6,7 +6,7 @@ defmodule Week1 do
   end
 end
 
-Week1.hello_ptr()
+# Week1.hello_ptr()
 
 defmodule Week2 do
   def is_prime?(n) when n <= 1, do: :false
@@ -137,11 +137,6 @@ defmodule Week3MonitoringActor do
       {:DOWN, _ref, :process, _from_pid, reason} -> IO.puts("The monitoring actor has detected that the monitored actor has stopped. Exit reason: #{reason}.")
       Process.sleep(5000)
     end
-    # monitored_actor = spawn(Week3MonitoredActor, :run_monitored_actor, [])
-    # Process.monitor(monitored_actor)
-    # receive do
-    #   {:DOWN, _ref, :process, _from_pid, reason} -> IO.puts("The monitoring actor has detected that the monitored actor has stopped. Exit reason: #{reason}.")
-    # end
     run_monitoring_actor()
   end
 end
@@ -171,3 +166,47 @@ end
 # Task 4
 # pid = spawn(Week3, :average, [0, 0])
 # send pid, 10
+
+defmodule Week4WorkingActor do
+  def run_working_actor do
+    pid = spawn(Week4WorkingActor, :working_actor, [])
+    name = for _ <- 1..8, into: "", do: <<Enum.random('abcdefghijklmnopqrstuvwxyz')>>
+    Process.register(pid, String.to_atom(name))
+    IO.puts("Worker with Id: (#{inspect(pid)}) and Name: (:#{name}) has been created")
+    pid
+  end
+
+  def working_actor do
+    receive do
+      :kill ->
+        exit(:kill)
+      message -> IO.puts("Worker with Id: (#{inspect(self())}) received a message: #{inspect(message)}")
+    end
+    working_actor()
+  end
+end
+
+defmodule Week4SupervisedPool do
+  def run_supervised_pool(n) do
+    IO.puts("Supervisor has started")
+    processes = Enum.map(1..n, fn _ -> Week4WorkingActor.run_working_actor() end)
+    spawn(Week4SupervisedPool, :supervised_pool, [processes])
+  end
+
+  def supervised_pool(processes) do
+    IO.puts("Workers monitored by the supervisor: #{inspect(processes)}")
+    Enum.map(processes, fn process-> Process.monitor(process) end)
+
+    receive do
+      {:DOWN, _ref, :process, pid, :kill} -> IO.puts("Worker with Id: (#{inspect(pid)}) has finished. Creating and monitoring a new worker")
+      new_pid = Week4WorkingActor.run_working_actor()
+      processes = List.delete(processes, pid)
+      processes = [new_pid] ++ processes
+      supervised_pool(processes)
+    end
+  end
+end
+
+# pid = Week4SupervisedPool.run_supervised_pool(5)
+# send( , "Hello")
+# send( , :kill)

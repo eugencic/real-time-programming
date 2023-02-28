@@ -210,3 +210,40 @@ end
 # pid = Week4SupervisedPool.run_supervised_pool(5)
 # send( , "Hello")
 # send( , :kill)
+
+defmodule Week5 do
+  def request do
+    import HTTPoison
+    import Floki
+
+    url = "https://quotes.toscrape.com/"
+    response = get!(url)
+
+    IO.puts("Status code: #{inspect(response.status_code)}")
+    IO.puts("Headers: #{inspect(response.headers)}")
+    IO.puts("Body : #{inspect(response.body)}")
+
+    quotes = parse_document!(response.body)
+             |> find(".quote")
+             |> Enum.map(fn quote ->
+                  text = quote |> find(".text") |> text()
+                  author = quote |> find(".author") |> text()
+                  tags = quote |> find(".tag") |> Enum.map(&text/1)
+                  %{text: text, author: author, tags: tags}
+                end)
+
+    IO.puts("Found #{length(quotes)} quotes:")
+    Enum.each(quotes, fn quote ->
+      IO.puts("#{quote.text}\n - #{quote.author}\n Tags: #{inspect(quote.tags)}\n")
+    end)
+
+    save_quotes(quotes)
+  end
+
+  defp save_quotes(quotes) do
+    import Jason
+    json = encode!(quotes)
+    File.write("quotes.json", json)
+    IO.puts("Quotes saved in quotes.json")
+  end
+end

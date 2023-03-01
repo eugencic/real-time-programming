@@ -300,3 +300,53 @@ Create a supervised pool of identical worker actors. The number of actors is sta
     end
   end
 ``` 
+
+## Week 5
+
+These are the tasks for the fifth week.
+
+## Tasks
+
+Write an application that would visit `https://quotes.toscrape.com/`. Print out the HTTP response status code, response headers and response body.
+
+```elixir
+    import HTTPoison
+
+    url = "https://quotes.toscrape.com/"
+    response = get!(url)
+
+    IO.puts("Status code: #{inspect(response.status_code)}")
+    IO.puts("Headers: #{inspect(response.headers)}")
+    IO.puts("Body : #{inspect(response.body)}")
+``` 
+
+Continue your previous application. Extract all quotes from the HTTP response body. Collect the author of the quote, the quote text and tags. Save the data into a list of maps, each map representing a single quote.
+
+```elixir
+    import Floki
+    
+    quotes = parse_document!(response.body)
+             |> find(".quote")
+             |> Enum.map(fn quote ->
+                  text = quote |> find(".text") |> text()
+                  author = quote |> find(".author") |> text()
+                  tags = quote |> find(".tag") |> Enum.map(&text/1)
+                  %{text: text, author: author, tags: tags}
+                end)
+
+    IO.puts("Found #{length(quotes)} quotes:")
+    Enum.each(quotes, fn quote ->
+      IO.puts("#{quote.text}\n - #{quote.author}\n Tags: #{inspect(quote.tags)}\n")
+    end)
+``` 
+
+Continue your previous application. Persist the list of quotes into a file. Encode the data into JSON format. Name the file quotes.json.
+
+```elixir
+  defp save_quotes(quotes) do
+    import Jason
+    json = encode!(quotes)
+    File.write("quotes.json", json)
+    IO.puts("Quotes saved in quotes.json")
+  end
+``` 

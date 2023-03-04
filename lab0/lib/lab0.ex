@@ -6,8 +6,6 @@ defmodule Week1 do
   end
 end
 
-# Week1.hello_ptr()
-
 defmodule Week2 do
   def is_prime?(n) when n <= 1, do: :false
   def is_prime?(n) when n in [2, 3], do: :true
@@ -150,23 +148,6 @@ defmodule Week3MonitoredActor do
   end
 end
 
-# Task 1
-# pid = spawn(Week3, :print_message, [])
-# send pid, "Task 1"
-
-# Task 2
-# pid = spawn(Week3, :modify_message, [])
-# send pid, 10
-# send pid, "Hello"
-# send pid, {10, "Hello"}
-
-# Task 3
-# pid = spawn(Week3MonitoringActor, :run_monitoring_actor, [])
-
-# Task 4
-# pid = spawn(Week3, :average, [0, 0])
-# send pid, 10
-
 defmodule Week4WorkingActor do
   def run_working_actor do
     pid = spawn(Week4WorkingActor, :working_actor, [])
@@ -206,10 +187,6 @@ defmodule Week4SupervisedPool do
     end
   end
 end
-
-# pid = Week4SupervisedPool.run_supervised_pool(5)
-# send( , "Hello")
-# send( , :kill)
 
 defmodule Week5 do
   def request do

@@ -14,28 +14,29 @@ These are the tasks for the first week.
 
 ### Print Hello PTR
 
-Change the directory
+Change the directory.
 
 ```
  cd lab0
 ```
 
-Use this command in the terminal to open the Elixir's Interactive Shell
+Use this command in the terminal to open the Elixir's Interactive Shell.
 
 ```
  iex -S mix
 ```
 
-Execute the function to print the message
+Execute the function to print the message.
 
 ```
-iex(1)> Lab0.print_hello()
+iex(1)> Week1.hello_ptr()
 Hello PTR
+"Hello PTR"
 ```
 
 ### Execute the unit test
 
-Use this command in the terminal to run the unit test
+Use this command in the terminal to run the unit test.
 
 ```
  mix test
@@ -57,6 +58,15 @@ Write a function that determines whether an input integer is prime.
     !Enum.any?(2..floored_sqrt, fn number -> rem(n, number) == 0 end)
   end
 ``` 
+
+Execute the function to print the message.
+
+```
+iex(1)> Week2.is_prime?(1)
+false
+iex(2)> Week2.is_prime?(5) 
+true
+```
  
 Write a function to calculate the area of a cylinder, given it’s height and radius.
 
@@ -65,6 +75,13 @@ Write a function to calculate the area of a cylinder, given it’s height and ra
     area = 2 * :math.pi * radius * (height + radius)
     Float.ceil(area, 4)
   end
+```
+
+Execute the function to print the message.
+
+```
+iex(1)> Week2.cylinder_area(5, 4)
+226.1947
 ```
 
 Write a function to reverse a list.
@@ -83,6 +100,13 @@ Write a function to reverse a list.
   end
 ```
 
+Execute the function to print the message.
+
+```
+iex(1)> Week2.reverse([1, 3, 5, 5, 7])
+[7, 5, 5, 3, 1]
+```
+
 Write a function to calculate the sum of unique elements in a list.
 
 ```elixir
@@ -92,6 +116,13 @@ Write a function to calculate the sum of unique elements in a list.
   end
 ```
 
+Execute the function to print the message.
+
+```
+iex(1)> Week2.unique_sum([1, 3, 5, 5, 7])
+16
+```
+
 Write a function that extracts a given number of randomly selected elements from a list.
 
 ```elixir
@@ -99,6 +130,13 @@ Write a function that extracts a given number of randomly selected elements from
     shuffled_list = Enum.sort_by(list, fn _ -> :rand.uniform() end)
     Enum.take(shuffled_list, n)
   end
+```
+
+Execute the function to print the message.
+
+```
+iex(1)> Week2.extract_random_number([1, 3, 5, 5, 7], 3) 
+[5, 7, 5]
 ```
 
 Write a function that returns the first n elements of the Fibonacci sequence.
@@ -115,6 +153,13 @@ Write a function that returns the first n elements of the Fibonacci sequence.
   end
 ```
 
+Execute the function to print the message.
+
+```
+iex(1)> Week2.first_fibonacci_elements(10) 
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34] 
+```
+
 Write a function that, given a dictionary, would translate a sentence. Words not found in the dictionary need not be translated.
 
 ```elixir
@@ -123,6 +168,17 @@ Write a function that, given a dictionary, would translate a sentence. Words not
     translated_words = Enum.map(words, fn word -> dictionary[String.to_atom(word)] || word end)
     Enum.join(translated_words, " ")
   end
+```
+
+Execute the function to print the message.
+
+```
+iex(1)> dictionary = %{mama: "mother", papa: "father"}
+%{mama: "mother", papa: "father"}
+iex(2)> original_string = "mama is with papa"
+"mama is with papa"
+iex(3)> Week2.translate(dictionary, original_string)
+"mother is with father"
 ```
 
 Write a function that receives as input three digits and arranges them in an order that would create the smallest possible number. Numbers cannot start with a 0.
@@ -139,6 +195,13 @@ Write a function that receives as input three digits and arranges them in an ord
   end
 ```
 
+Execute the function to print the message.
+
+```
+iex(1)> Week2.smallest_number(5, 0, 4)
+405
+```
+
 Write a function that would rotate a list n places to the left.
 
 ```elixir
@@ -147,6 +210,15 @@ Write a function that would rotate a list n places to the left.
     remaining = Enum.take(list, number)
     to_rotate ++ remaining
   end
+```
+
+Execute the function to print the message.
+
+```
+iex(1)> list = [3, 5, 6, 4, 5, 2]
+[3, 5, 6, 4, 5, 2]
+iex(2)> Week2.rotate_left(list, 3)
+[4, 5, 2, 3, 5, 6]
 ```
 
 Write a function that lists all tuples a, b, c such that a^2 + b^2 = c^2 and a, b ≤ 20.
@@ -165,12 +237,41 @@ Write a function that lists all tuples a, b, c such that a^2 + b^2 = c^2 and a, 
   end
 ```
 
+Execute the function to print the message.
+
+```
+iex(1)> Week2.list_right_angled_triangles
+[
+  {3, 4, 5},
+  {4, 3, 5},
+  {5, 12, 13},
+  {6, 8, 10},
+  {8, 6, 10},
+  {8, 15, 17},
+  {9, 12, 15},
+  {12, 5, 13},
+  {12, 9, 15},
+  {12, 16, 20},
+  {15, 8, 17},
+  {15, 20, 25},
+  {16, 12, 20},
+  {20, 15, 25}
+]
+```
+
 Write a function that eliminates consecutive duplicates in a list.
 
 ```elixir
   def remove_consecutive_duplicates(list) do
     Enum.dedup(list)
   end
+```
+
+Execute the function to print the message.
+
+```
+iex(1)> Week2.remove_consecutive_duplicates([3, 5, 5, 3, 4, 6, 6, 6])
+[3, 5, 3, 4, 6]
 ```
 
 ## Week 3
@@ -189,6 +290,16 @@ Create an actor that prints on the screen any message it receives.
     print_message()
   end
 ``` 
+
+Execute the function to print the message.
+
+```
+iex(1)> pid = spawn(Week3, :print_message, [])
+#PID<0.285.0>
+iex(2)> send pid, "Task 1"
+Task 1
+"Task 1"
+```
 
 Create an actor that returns any message it receives, while modifying it.
 
@@ -210,6 +321,22 @@ Create an actor that returns any message it receives, while modifying it.
     end
   end
 ``` 
+
+Execute the function to print the message.
+
+```
+iex(1)> pid = spawn(Week3, :modify_message, [])
+#PID<0.288.0>
+iex(2)> send pid, 10
+Received: 11
+10
+iex(3)> send pid, "Hello"
+"Hello"
+iex(4)> Received: hello
+iex(5)> send pid, {10, "Hello"}
+Received: I don't know how to HANDLE this!
+{10, "Hello"}
+```
 
 Create a two actors, actor one ”monitoring” the other. If the second actor stops, actor one gets notified via a message.
 
@@ -236,6 +363,12 @@ Create a two actors, actor one ”monitoring” the other. If the second actor s
   end
 ``` 
 
+Execute the function to print the message.
+
+```
+iex(1)> pid = spawn(Week3MonitoringActor, :run_monitoring_actor, [])
+```
+
 Create an actor which receives numbers and with each request prints out the current average.
 
 ```elixir
@@ -250,6 +383,11 @@ Create an actor which receives numbers and with each request prints out the curr
     end
   end
 ``` 
+
+```
+iex(1)> pid = spawn(Week3, :average, [0, 0])
+iex(2)> send pid, 10
+```
 
 ## Week 4
 
@@ -301,6 +439,12 @@ Create a supervised pool of identical worker actors. The number of actors is sta
   end
 ``` 
 
+```
+iex(1)> pid = Week4SupervisedPool.run_supervised_pool(5)
+iex(2)> send( , "Hello")
+iex(3)> send( , :kill)
+```
+
 ## Week 5
 
 These are the tasks for the fifth week.
@@ -350,3 +494,7 @@ Continue your previous application. Persist the list of quotes into a file. Enco
     IO.puts("Quotes saved in quotes.json")
   end
 ``` 
+
+```
+iex(1)> Week5.request
+```

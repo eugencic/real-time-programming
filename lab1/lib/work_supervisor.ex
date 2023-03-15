@@ -1,4 +1,4 @@
-defmodule ReaderSupervisor do
+defmodule WorkSupervisor do
   use Supervisor
 
   def start_link(state) do

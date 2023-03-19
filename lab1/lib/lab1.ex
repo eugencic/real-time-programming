@@ -1,5 +1,5 @@
 defmodule Lab1 do
   def start do
-    WorkSupervisor.start_link(:ok)
+    MainSupervisor.start_link
   end
 end

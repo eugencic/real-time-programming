@@ -1,21 +1,42 @@
-# Lab1
-
-**TODO: Add description**
+# Laboratory Work Nr.1
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `lab1` to your list of dependencies in `mix.exs`:
+### Clone the repository
 
-```elixir
-def deps do
-  [
-    {:lab1, "~> 0.1.0"}
-  ]
-end
+```bash
+ git clone https://github.com/eugencic/utm-ptr
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/lab1>.
+### Change the directory
 
+```
+ cd lab1
+```
+
+### Import Docker Container
+
+```bash
+docker pull alexburlacu/rtp-server:faf18x
+docker run -p 4000:4000 alexburlacu/rtp-server:faf18x
+```
+
+### Run the project
+
+Use this command in the terminal to install all the dependencies of the project
+
+```bash
+ mix deps.get
+```
+
+Use this command in the terminal to open the Elixir's Interactive Shell
+
+```bash
+ iex -S mix
+```
+
+Execute the function to run the program
+
+```elixir
+iex(1)> Lab1.start
+```

@@ -12,7 +12,7 @@ defmodule TaskMediator do
 
   def handle_info(data, state) do
     printer = :"Printer#{state}"
-    send(printer, data)
+    if Process.whereis(printer) != nil, do: send(printer, data)
     state = state + 1
     if state >= 4 do
       {:noreply, 1}

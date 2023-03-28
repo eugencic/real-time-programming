@@ -17,7 +17,20 @@ defmodule Printer do
   end
 
   def handle_info(data, name) do
-    IO.puts("Received tweet: #{data["message"]["tweet"]["text"]} \n")
+    {:ok, bad_words_json} = File.read("./lib/bad_words.json")
+    {:ok, bad_words_dict} = Poison.decode(bad_words_json)
+    bad_words = bad_words_dict["BadWords"]
+    tweet_words = String.split(data["message"]["tweet"]["text"], " ", trim: true)
+    censored_words = Enum.map(tweet_words, fn word ->
+      word_lowercase = String.downcase(word)
+      if Enum.member?(bad_words, word_lowercase) do
+        String.duplicate("*", String.length(word))
+      else
+        word
+      end
+    end)
+    censored_tweet = Enum.join(censored_words, " ")
+    IO.puts("Received tweet: #{censored_tweet} \n")
     min = 5
     max = 50
     lambda = Enum.sum(min..max) / Enum.count(min..max)

@@ -2,6 +2,7 @@ defmodule WorkerPool do
   use Supervisor
 
   def start_link(state) do
+    IO.puts("Starting worker pool")
     Supervisor.start_link(__MODULE__, state, name: __MODULE__)
   end
 

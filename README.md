@@ -1,6 +1,6 @@
-# Real Time Programming Laboratory Works
+# Real Time Programming
 
-## Laboratory Works
+## Projects
 
-1. [Laboratory Work #0](https://github.com/eugencic/utm-ptr/tree/main/lab0)
-2. [Laboratory Work #1](https://github.com/eugencic/utm-ptr/tree/main/lab1)
+1. [Project #0](https://github.com/eugencic/utm-ptr/tree/main/lab0)
+2. [Project #1](https://github.com/eugencic/utm-ptr/tree/main/lab1)

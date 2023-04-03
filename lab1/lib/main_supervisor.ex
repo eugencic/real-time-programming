@@ -8,8 +8,12 @@ defmodule MainSupervisor do
 
   def init(_args) do
     children = [
-      {WorkerPool, :start_link},
-      {TaskMediator, 1},
+      {RedactorPool, :start_link},
+      {RedactorTaskMediator, 1},
+      {SentimentScorerPool, :start_link},
+      {SentimentScorerTaskMediator, 1},
+      {EngagementRationerPool, :start_link},
+      {EngagementRationerTaskMediator, 1},
       %{
         id: :Reader1,
         start: {Reader, :start_link, ["localhost:4000/tweets/1"]}

@@ -1,4 +1,4 @@
-defmodule Printer do
+defmodule SentimentScorer do
   use GenServer
 
   def start_link(name) do
@@ -17,19 +17,7 @@ defmodule Printer do
   end
 
   def handle_info(data, name) do
-    {:ok, bad_words_json} = File.read("./lib/bad_words.json")
-    {:ok, bad_words_dict} = Poison.decode(bad_words_json)
-    bad_words = bad_words_dict["BadWords"]
     tweet_words = String.split(data["message"]["tweet"]["text"], " ", trim: true)
-    censored_words = Enum.map(tweet_words, fn word ->
-      word_lowercase = String.downcase(word)
-      if Enum.member?(bad_words, word_lowercase) do
-        String.duplicate("*", String.length(word))
-      else
-        word
-      end
-    end)
-    censored_tweet = Enum.join(censored_words, " ")
     emotion_values_url = "localhost:4000/emotion_values"
     emotion_values = HTTPoison.get!(emotion_values_url).body
     emotion_values_strings = String.split(emotion_values, ["\n", "\t"]) |> Enum.map(&String.replace(&1, "\r", ""))
@@ -43,14 +31,7 @@ defmodule Printer do
     end)
     sum_of_values = Enum.reduce(values, 0, fn x, acc -> x + acc end)
     sentiment_score = sum_of_values / length(values)
-    favorite_count = data["message"]["tweet"]["retweeted_status"]["favorite_count"] || 0
-    retweet_count = data["message"]["tweet"]["retweeted_status"]["retweet_count"] || 0
-    followers_count = data["message"]["tweet"]["user"]["followers_count"]
-    engagement_ratio =
-      if followers_count == 0,
-        do: 0,
-        else: (favorite_count + retweet_count) / followers_count
-    IO.puts("Received tweet: #{censored_tweet}\nSentiment score: #{sentiment_score}\nEngagement ratio: #{engagement_ratio}\n")
+    IO.puts("Sentiment score: #{sentiment_score}\n")
     min = 5
     max = 50
     lambda = Enum.sum(min..max) / Enum.count(min..max)

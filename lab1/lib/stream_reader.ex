@@ -18,14 +18,19 @@ defmodule Reader do
   end
 
   def handle_info(%HTTPoison.AsyncChunk{chunk: "event: \"message\"\n\ndata: {\"message\": panic}\n\n"}, url) do
-    send(TaskMediator, :kill)
+    send(RedactorTaskMediator, :kill)
+    send(SentimentScorerTaskMediator, :kill)
+    send(EngagementRationerTaskMediator, :kill)
     {:noreply, url}
   end
 
   def handle_info(%HTTPoison.AsyncChunk{chunk: chunk}, url) do
     [_, data] = Regex.run(~r/data: ({.+})\n\n$/, chunk)
     case Poison.decode(data) do
-      {:ok, result} -> send(TaskMediator, result)
+    {:ok, result} ->
+      send(RedactorTaskMediator, result)
+      send(SentimentScorerTaskMediator, result)
+      send(EngagementRationerTaskMediator, result)
       {:error, _} -> nil
     end
     {:noreply, url}

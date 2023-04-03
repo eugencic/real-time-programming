@@ -1,8 +1,8 @@
-defmodule TaskMediator do
+defmodule EngagementRationerTaskMediator do
   use GenServer
 
   def start_link(state) do
-    IO.puts("Starting task mediator")
+    IO.puts("Starting engagement rationer task mediator")
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
@@ -11,8 +11,8 @@ defmodule TaskMediator do
   end
 
   def handle_info(data, state) do
-    printer = :"Printer#{state}"
-    if Process.whereis(printer) != nil, do: send(printer, data)
+    engagement_rationer = :"EngagementRationer#{state}"
+    if Process.whereis(engagement_rationer) != nil, do: send(engagement_rationer, data)
     state = state + 1
     if state >= 4 do
       {:noreply, 1}

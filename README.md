@@ -2,5 +2,5 @@
 
 ## Projects
 
-1. [Project #0](https://github.com/eugencic/utm-ptr/tree/main/lab0)
-2. [Project #1](https://github.com/eugencic/utm-ptr/tree/main/lab1)
+* [Project Nr.0](https://github.com/eugencic/utm-ptr/tree/main/lab0)
+* [Project Nr.1](https://github.com/eugencic/utm-ptr/tree/main/lab1)

@@ -8,6 +8,7 @@ defmodule MainSupervisor do
 
   def init(_args) do
     children = [
+      {Batcher, {[], 10, 1000}},
       {RedactorPool, :start_link},
       {RedactorTaskMediator, 1},
       {SentimentScorerPool, :start_link},

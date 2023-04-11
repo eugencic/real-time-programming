@@ -30,7 +30,8 @@ defmodule Redactor do
       end
     end)
     censored_tweet = Enum.join(censored_words, " ")
-    IO.puts("Received tweet: #{censored_tweet}\n")
+    # IO.puts("Received tweet: #{censored_tweet}\n")
+    send(Batcher, censored_tweet)
     min = 5
     max = 50
     lambda = Enum.sum(min..max) / Enum.count(min..max)

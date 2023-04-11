@@ -1,4 +1,4 @@
-# Laboratory works of the Real Time Programming university course
+# Laboratory works of the Real Time Programming university course.
 
 Performed by: Eugeniu Popa, FAF-202
 

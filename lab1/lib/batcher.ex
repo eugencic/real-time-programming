@@ -35,6 +35,7 @@ defmodule Batcher do
       {:batch_full, state} ->
         IO.puts("Batcher is full. Printing the data...\n")
         print_tweets(state)
+        save_tweets(state)
         loop(timeout)
     after
       timeout ->
@@ -48,5 +49,9 @@ defmodule Batcher do
 
   def print_tweets(tweets) do
     Enum.each(tweets, fn tweet -> IO.puts("Received tweet: #{tweet}\n") end)
+  end
+
+  def save_tweets(tweets) do
+    GenServer.call(Database, {:save_tweet, tweets})
   end
 end

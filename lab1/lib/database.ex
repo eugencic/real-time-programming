@@ -16,10 +16,10 @@ defmodule Database do
       :ets.insert(:tweets, {acc, tweet})
       acc + 1
     end)
-    # if rem(new_state, 100) == 0 do
-    #   IO.puts("State is now #{new_state}")
-    #   print_database()
-    # end
+    if rem(new_state, 100) == 0 do
+      IO.puts("State is now #{new_state}")
+      print_database()
+    end
     {:reply, :ok, new_state}
   end
 

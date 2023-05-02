@@ -1,8 +1,8 @@
 ```mermaid
 sequenceDiagram
-    Publisher->>Broker Publisher Supervisor: Message & Topic
-    Broker Publisher Supervisor->>Broker Topics: Message & Topic
-    Broker Topics->>Broker Consumer Supervisor: Message & Topic
-    Broker Consumer Supervisor->>Consumer: Message & Topic
-    Consumer->>Broker Consumer Supervisor: Subscribe
+    Publisher->>Broker Publisher Manager: Message & Topic
+    Broker Publisher Manager->>Broker Topics: Message & Topic
+    Broker Topics->>Broker Consumer Manager: Message & Topic
+    Broker Consumer Manager->>Consumer: Message & Topic
+    Consumer->>Broker Consumer Manager: Subscribe
 ```

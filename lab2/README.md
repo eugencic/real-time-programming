@@ -1,21 +1,42 @@
-# Lab2
+# Laboratory Work Nr.2
 
-**TODO: Add description**
+## Description
+
+The goal for this project is to create an actor-based message broker application that would
+manage the communication between other applications named producers and consumers.
+
+## Message Flow Diagram
+
+![Diagram](https://github.com/eugencic/real-time-programming/tree/main/lab2/diagrams/message_flow_diagram.md)
+
+## Supervision Tree Diagram
+
+![Diagram](https://github.com/eugencic/real-time-programming/tree/main/lab2/diagrams/supervision_tree_diagram.md)
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `lab2` to your list of dependencies in `mix.exs`:
+### Clone the repository
 
-```elixir
-def deps do
-  [
-    {:lab2, "~> 0.1.0"}
-  ]
-end
+```bash
+ git clone https://github.com/eugencic/real-time-programming/tree/main/lab2
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/lab2>.
+### Change the directory
 
+```
+ cd lab2
+```
+
+### Run the project
+
+Use this command in the terminal to install all the dependencies of the project
+
+```bash
+$ mix run --no-halt
+```
+
+Use this command to connect via Telnet
+
+```bash
+$ telnet 127.0.0.1 4040
+```

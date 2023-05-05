@@ -7,7 +7,7 @@ manage the communication between other applications named producers and consumer
 
 ## Message Flow Diagram
 
-![Diagram](https://github.com/eugencic/real-time-programming/blob/main/lab2/diagrams/supervision_tree_diagram.png)
+![Diagram](https://github.com/eugencic/real-time-programming/blob/main/lab2/diagrams/message_flow_diagram.md)
 
 ## Supervision Tree Diagram
 

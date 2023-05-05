@@ -7,7 +7,14 @@ manage the communication between other applications named producers and consumer
 
 ## Message Flow Diagram
 
-![Diagram](https://github.com/eugencic/real-time-programming/blob/main/lab2/diagrams/message_flow_diagram.md)
+```mermaid
+sequenceDiagram
+    Publisher->>Broker Publisher Manager: Message & Topic
+    Broker Publisher Manager->>Broker Topics: Message & Topic
+    Broker Topics->>Broker Consumer Manager: Message & Topic
+    Broker Consumer Manager->>Consumer: Message & Topic
+    Consumer->>Broker Consumer Manager: Subscribe
+```
 
 ## Supervision Tree Diagram
 

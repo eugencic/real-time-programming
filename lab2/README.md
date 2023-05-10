@@ -36,14 +36,18 @@ sequenceDiagram
 
 ### Run the project
 
-Use this command in the terminal to install all the dependencies of the project
+Execute this command in the terminal to install all the dependencies of the project
 
 ```bash
 $ mix run --no-halt
 ```
 
-Use this command to connect via Telnet
+Execute these commands to connect via Telnet
 
 ```bash
 $ telnet 127.0.0.1 4040
+```
+
+```bash
+$ telnet 127.0.0.1 4041
 ```

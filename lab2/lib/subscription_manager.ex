@@ -6,7 +6,7 @@ defmodule SubscriptionManager do
   end
 
   def init(_opts) do
-    {:ok, %{}}
+    {:ok, %{topics: %{}, publishers: %{}, pub_sub: %{}}}
   end
 
   def register_publisher(client, name) do

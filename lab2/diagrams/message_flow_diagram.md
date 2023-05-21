@@ -3,7 +3,7 @@ sequenceDiagram
     PublisherUser->>Publisher: Connection established
     Publisher->>Role Manager: Check whether the role of the user is registered
     Publisher->>PublisherUser: What is your name?
-    User->>Publisher: Name answer
+    PublisherUser->>Publisher: Name answer
     Publisher->>Role Manager: Assign role to the user
     Role Manager->>Database: Store the role of the user
     Publisher->>Subscription Manager: Register publisher

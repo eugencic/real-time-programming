@@ -1,8 +1,21 @@
 ```mermaid
 sequenceDiagram
-    Publisher->>Broker Publisher Manager: Message & Topic
-    Broker Publisher Manager->>Broker Topics: Message & Topic
-    Broker Topics->>Broker Consumer Manager: Message & Topic
-    Broker Consumer Manager->>Consumer: Message & Topic
-    Consumer->>Broker Consumer Manager: Subscribe
+    PublisherUser->>Publisher: Connection established
+    Publisher->>Role Manager: Check whether the role of the user is registered
+    Publisher->>PublisherUser: What is your name?
+    User->>Publisher: Name answer
+    Publisher->>Role Manager: Assign role to the user
+    Role Manager->>Database: Store the role of the user
+    Publisher->>Subscription Manager: Register publisher
+    Subscription Manager->>Database: Store the name of the user
+    ConsumerUser->>Consumer: Connection established
+    Consumer->>Role Manager: Check whether the role of the user is registered
+    Consumer->>Role Manager: Assign role to the user
+    Role Manager->>Database: Store the role of the user
+    Publisher->>Commands: Start listening to the user
+    Consumer->>Commands: Start listening to the user
+    PublisherUser->>Commands: Publish on topic
+    ConsumerUser->>Commands: Subscribe to topic/publisher
+    Command->> ConsumerUser: Send message if the user is subscribed
 ```
+
